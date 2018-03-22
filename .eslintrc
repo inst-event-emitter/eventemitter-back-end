@@ -1,0 +1,7 @@
+{
+  "extends": ["airbnb", "plugin:jest/recommended"],
+  "plugins": ["jest"],
+  "globals": {
+    "throw": true
+  }
+}

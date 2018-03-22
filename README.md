@@ -1,2 +1,2 @@
-# eventemitter-back-end
+# eventemitter-backend
 Project server side
