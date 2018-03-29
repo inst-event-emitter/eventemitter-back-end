@@ -5,7 +5,10 @@ const defaults = require('./defaults.json');
 
 nconf.use('memory');
 
-const env = process.env.NODE_ENV;
+const env = process.env.NODE_ENV || 'dev';
+if (!env) {
+  throw new Error('Please specify NODE_ENV environment variable');
+}
 
 nconf
   .argv()

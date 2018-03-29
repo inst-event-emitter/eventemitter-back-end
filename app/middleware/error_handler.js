@@ -2,11 +2,10 @@ const httpErrors = require('http-errors');
 const httpStatus = require('http-status');
 const { pick } = require('lodash');
 
-const getErrorStatusCode = (err) => {
-  const statusCode = err.status || err.statusCode || httpStatus.INTERNAL_SERVER_ERROR;
-
-  return statusCode;
-};
+const getErrorStatusCode = err =>
+  err.status ||
+  err.statusCode ||
+  httpStatus.INTERNAL_SERVER_ERROR;
 
 const notFound = () => {
   throw new httpErrors.NotFound('Resource not found');
