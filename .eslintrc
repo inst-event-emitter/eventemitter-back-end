@@ -2,5 +2,10 @@
   "extends": ["airbnb-base"],
   "globals": {
     "throw": true
+  },
+  "rules": {
+    "comma-dangle": ["error", {
+      "objects": "ignore"
+    }]
   }
 }

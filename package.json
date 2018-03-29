@@ -7,7 +7,7 @@
   "author": "DenKrivichanin <krivichaninds@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon lib/server.js",
+    "start": "nodemon app",
     "lint": "eslint ."
   },
   "devDependencies": {
