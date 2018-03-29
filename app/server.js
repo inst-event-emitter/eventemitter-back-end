@@ -3,6 +3,8 @@ const nconf = require('nconf');
 const globSync = require('glob').sync;
 const morgan = require('morgan');
 
+const logger = require('./services/logger');
+
 const { errorHandler, notFound } = require('./middleware/error_handler');
 
 const initApp = () => {
@@ -30,9 +32,9 @@ const startApp = () => {
 
   app.listen(port, (err) => {
     if (err) {
-      console.log(err);
+      logger.error(err, 'Internal server error');
     } else {
-      console.log(`Server listen on port: ${port}`);
+      logger.info({ port }, 'Express serving now running.');
     }
   });
 };
