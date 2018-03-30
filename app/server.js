@@ -8,7 +8,7 @@ const { errorHandler, notFound } = require('./middleware/error_handler');
 const initApp = () => {
   const env = process.env.NODE_ENV || 'dev';
   if (env === 'dev') {
-    app.use(morgan('dev'));
+    app.use(morgan(env));
   }
 
   const routes = globSync('./routes/**/*.js', {
