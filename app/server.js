@@ -1,10 +1,16 @@
 const app = require('express')();
 const nconf = require('nconf');
 const globSync = require('glob').sync;
+const morgan = require('morgan');
 
 const { errorHandler, notFound } = require('./middleware/error_handler');
 
 const initApp = () => {
+  const env = process.env.NODE_ENV || 'dev';
+  if (env === 'dev') {
+    app.use(morgan(env));
+  }
+
   const routes = globSync('./routes/**/*.js', {
     cwd: __dirname,
   }).map(require);
