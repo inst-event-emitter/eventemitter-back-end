@@ -1,4 +1,4 @@
-const config = require('../config');
+const config = require('../config').get('logger');
 const logger = require('../services/logger');
 
 module.exports = () => {
