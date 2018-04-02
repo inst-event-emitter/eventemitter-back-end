@@ -11,12 +11,6 @@
     "streams": [{
       "level": "error",
       "path": "logs/error.log"
-    }, {
-      "type": "rotating-file",
-      "path": "logs/dev.log",
-      "period": "1d",
-      "count": 7
-    }],
-    "rotationEnabled": true
+    }]
   }
 }
