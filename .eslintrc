@@ -1,0 +1,15 @@
+{
+  "extends": ["airbnb-base"],
+  "globals": {
+    "throw": true
+  },
+  "rules": {
+    "comma-dangle": ["error", {
+      "arrays": "ignore",
+      "objects": "ignore",
+      "imports": "always",
+      "exports": "always",
+      "functions": "ignore"
+    }]
+  }
+}

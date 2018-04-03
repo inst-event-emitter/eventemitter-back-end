@@ -1,0 +1,10 @@
+{
+  "logger": {
+    "streams": [{
+      "type": "rotating-file",
+      "path": "logs/event-emitter.log",
+      "period": "1d",
+      "count": 7
+    }]
+  }
+}
