@@ -5,5 +5,9 @@
   "App": {
     "namespace": "/api",
     "version": "/v1"
+  },
+  "logger": {
+    "name": "event-emitter",
+    "logsDir": "logs"
   }
 }

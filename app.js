@@ -1,4 +1,5 @@
 const initializer = require('./app/utils/initializer');
+
 const server = require('./app/server');
 
 initializer.appReady()
