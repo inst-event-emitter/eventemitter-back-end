@@ -1,12 +1,13 @@
 {
   "logger": {
     "name": "event-emitter",
+    "logsDir": "logs",
     "streams": [{
       "level": "error",
-      "path": "logs/error.log"
+      "path": "error.log"
     }, {
       "type": "rotating-file",
-      "path": "logs/dev.log",
+      "path": "dev.log",
       "period": "1d",
       "count": 7
     }]

@@ -8,9 +8,10 @@
   },
   "logger": {
     "name": "event-emitter",
+    "logsDir": "logs",
     "streams": [{
       "level": "error",
-      "path": "logs/error.log"
+      "path": "error.log"
     }]
   }
 }
