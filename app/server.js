@@ -3,7 +3,7 @@ const nconf = require('nconf');
 const globSync = require('glob').sync;
 const morgan = require('morgan');
 
-const logger = require('./services/logger');
+const logger = require('./utils/logger');
 
 const { errorHandler, notFound } = require('./middleware/error_handler');
 
@@ -36,6 +36,10 @@ const startApp = () => {
     } else {
       logger.info({ port }, 'Express serving now running.');
     }
+  });
+
+  process.once('SIGUSR2', () => {
+    process.kill(process.pid, 'SIGUSR2');
   });
 };
 

@@ -29,4 +29,8 @@ if (env === 'dev') {
 
 const rootLogger = new Logger(bunyan.createLogger(loggerOptions));
 
+process.once('SIGUSR2', () => {
+  rootLogger.reopenFileStreams();
+});
+
 module.exports = rootLogger;
