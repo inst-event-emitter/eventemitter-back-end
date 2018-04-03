@@ -1,52 +1,42 @@
+const config = require('nconf');
 const bunyan = require('bunyan');
 const PrettyStream = require('bunyan-prettystream');
 const fs = require('fs');
-const { get } = require('lodash');
 
-const Logger = require('./base_logger');
-
-const config = require('../config').get('logger');
-
-const env = process.env.NODE_ENV || 'dev';
-
-const streams = [
-  { level: 'error', stream: process.stderr },
-  ...get(config, 'streams', []),
-];
-
-if (env === 'dev') {
-  const prettyStream = new PrettyStream();
-  prettyStream.pipe(process.stdout);
-
-  streams.push({
-    level: 'info',
-    stream: prettyStream,
-  });
-}
-
-const logsDir = get(config, 'logsDir', 'logs');
-
+const logsDir = config.get('logger:logsDir');
 if (!fs.existsSync(logsDir)) {
   fs.mkdirSync(logsDir);
 }
 
-const rootLogger = new Logger(bunyan.createLogger({
-  name: config.name || 'event-emitter',
-  streams: streams.map((stream) => {
-    if (stream.path) {
-      return {
-        ...stream,
-        path: `${logsDir}/${stream.path}`,
-      };
-    }
+const logConfig = config.get('logger');
 
-    return stream;
-  }),
-  serializers: bunyan.stdSerializers,
-}));
+const prettyStdOut = new PrettyStream();
+prettyStdOut.pipe(process.stdout);
 
-process.once('SIGUSR2', () => {
-  rootLogger.reopenFileStreams();
+const env = process.env.NODE_ENV || 'dev';
+if (env === 'dev') {
+  logConfig.streams.push({
+    level: 'info',
+    stream: prettyStdOut
+  });
+}
+logConfig.streams.push({
+  level: 'warn',
+  stream: prettyStdOut
 });
 
-module.exports = rootLogger;
+const parent = bunyan.createLogger(logConfig);
+const loggerCollector = [parent];
+process.on('SIGUSR2', () => {
+  loggerCollector.forEach(logger => logger.reopenFileStreams());
+});
+
+const getLogger = (component, options) => {
+  const logger = parent.child(Object.assign({
+    component: component || 'Undefined component'
+  }, options));
+  loggerCollector.push(logger);
+  return logger;
+};
+
+module.exports = getLogger;
