@@ -1,7 +1,8 @@
-const config = require('nconf');
 const bunyan = require('bunyan');
 const PrettyStream = require('bunyan-prettystream');
 const fs = require('fs');
+
+const config = require('../config');
 
 const logsDir = config.get('logger:logsDir');
 if (!fs.existsSync(logsDir)) {
@@ -27,7 +28,7 @@ logConfig.streams.push({
 
 const parent = bunyan.createLogger(logConfig);
 const loggerCollector = [parent];
-process.on('SIGUSR2', () => {
+process.once('SIGUSR2', () => {
   loggerCollector.forEach(logger => logger.reopenFileStreams());
 });
 

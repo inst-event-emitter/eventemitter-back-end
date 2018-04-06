@@ -6,5 +6,9 @@
       "period": "1d",
       "count": 7
     }]
+  },
+  "elasticsearch": {
+    "host": "http://172.29.10.21:9200",
+    "log": "info"
   }
 }
