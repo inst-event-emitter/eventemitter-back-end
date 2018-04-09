@@ -1,7 +1,8 @@
 const bodybuilder = require('bodybuilder');
-const { get } = require('lodash');
+const { get, isEmpty } = require('lodash');
+const uuid = require('uuid');
 
-const { client } = require('../services/elasticsearch');
+const client = require('../services/elasticsearch');
 
 const searchEvents = (req, res, next) => client.search({
   index: 'event',
@@ -11,10 +12,36 @@ const searchEvents = (req, res, next) => client.search({
     // .query('match', 'name', 'my event')
     .build()
 })
-  .then(result => get(result, 'hits.hits', []).map(hit => get(hit, '_source', {})))
+  .then(result => get(result, 'hits.hits', []).map(hit => ({
+    id: get(hit, '_id'),
+    ...get(hit, '_source', {})
+  })))
   .then(events => res.json(events))
   .catch(next);
 
+const createEvent = (req, res, next) => {
+  // TODO: create validation for route params
+  if (isEmpty(req.body)) {
+    return res.sendStatus(400);
+  }
+
+  const { name, description, date } = req.body;
+
+  return client.create({
+    id: uuid(),
+    index: 'event',
+    type: 'event',
+    body: {
+      name,
+      description,
+      date,
+    }
+  })
+    .then(res.sendStatus(204))
+    .catch(next);
+};
+
 module.exports = {
   searchEvents,
+  createEvent,
 };
