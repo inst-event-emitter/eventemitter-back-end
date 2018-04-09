@@ -1,0 +1,53 @@
+{
+  "template": "event-emitter-template",
+  "order": 0,
+
+  "settings": {
+    "analysis": {
+      "filter": {
+        "desc_ngram": {
+          "type": "ngram",
+          "min_gram": 1,
+          "max_gram": 50
+        }
+      },
+      "analyzer": {
+        "index_ngram": {
+          "type": "custom",
+          "tokenizer": "keyword",
+          "filter": [
+            "desc_ngram",
+            "lowercase"
+          ]
+        },
+        "search_ngram": {
+          "type": "custom",
+          "tokenizer": "keyword",
+          "filter": "lowercase"
+        }
+      }
+    }
+  },
+
+  "mappings": {
+
+    "event": {
+      "properties": {
+        "name": {
+          "type": "text",
+          "analyzer": "index_ngram",
+          "search_analyzer": "search_ngram"
+        },
+        "description": {
+          "type": "text",
+          "analyzer": "index_ngram",
+          "search_analyzer": "search_ngram"
+        },
+        "date": {
+          "type": "date",
+          "format": "yyyy-MM-dd HH:mm"
+        }
+      }
+    }
+  }
+}
