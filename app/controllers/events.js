@@ -37,11 +37,29 @@ const createEvent = (req, res, next) => {
       date,
     }
   })
-    .then(res.sendStatus(204))
+    .then(() => res.sendStatus(204))
+    .catch(next);
+};
+
+const deleteEvent = (req, res, next) => {
+  // TODO: create validation for route params
+  const { id } = req.params;
+
+  if (isEmpty(id)) {
+    return res.sendStatus(400);
+  }
+
+  return client.delete({
+    index: 'event',
+    type: 'event',
+    id
+  })
+    .then(() => res.sendStatus(204))
     .catch(next);
 };
 
 module.exports = {
   searchEvents,
   createEvent,
+  deleteEvent,
 };
