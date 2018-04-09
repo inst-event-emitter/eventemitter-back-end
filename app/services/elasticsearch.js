@@ -18,22 +18,22 @@ client.ping({
   }
 });
 
-const createDocument = () =>
+const createDocument = (id, index, type, body) =>
   client.create({
-    index: 'event',
-    type: 'event',
-    id: '1',
-    body: {
-      description: 'some description',
-      eventDate: '2018-05-11 12:00',
-      eventType: 'custom',
-      name: 'my event',
-    }
+    id,
+    index,
+    type,
+    body
   });
 
-// createDocument();
+
+// createDocument('2', 'event', 'event', {
+  // description: 'some description',
+  // date: '2018-05-11 12:00',
+  // name: 'my event',
+// });
 
 module.exports = {
   client,
-  createDocument
+  createDocument,
 };
