@@ -1,4 +1,4 @@
-require('../config/index');
+require('../config');
 require('../services/elasticsearch');
 
 const loggerInitialization = () => Promise.resolve();

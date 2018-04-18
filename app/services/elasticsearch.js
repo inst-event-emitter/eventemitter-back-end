@@ -1,11 +1,11 @@
 const elasticsearch = require('elasticsearch');
+const elasticConfig = require('nconf').get('elasticsearch');
 
-const config = require('../config').get('elasticsearch');
 const logger = require('../utils/logger')('elasticsearch');
 
 const client = new elasticsearch.Client({
-  host: config.host,
-  log: config.log
+  host: elasticConfig.host,
+  log: elasticConfig.log
 });
 
 client.ping({

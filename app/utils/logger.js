@@ -1,8 +1,7 @@
+const config = require('nconf');
 const bunyan = require('bunyan');
 const PrettyStream = require('bunyan-prettystream');
 const fs = require('fs');
-
-const config = require('../config');
 
 const logsDir = config.get('logger:logsDir');
 if (!fs.existsSync(logsDir)) {
