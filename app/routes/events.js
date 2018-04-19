@@ -5,8 +5,8 @@ const { searchEvents, createEvent, deleteEvent } = require('../controllers/event
 
 module.exports = (app, conf) => {
   router.get('/events', searchEvents);
-  router.post('/events/create', bodyParser.json(), createEvent);
-  router.delete('/events/delete/:id', deleteEvent);
+  router.post('/events', bodyParser.json(), createEvent);
+  router.delete('/events/:id', deleteEvent);
 
   app.use(conf.namespace + conf.version, router);
 };
