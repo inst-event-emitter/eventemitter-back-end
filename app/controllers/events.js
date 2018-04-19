@@ -37,7 +37,7 @@ const createEvent = (req, res, next) => {
       date,
     }
   })
-    .then(() => res.sendStatus(204))
+    .then(() => res.sendStatus(201))
     .catch(next);
 };
 
@@ -54,7 +54,7 @@ const deleteEvent = (req, res, next) => {
     type: 'event',
     id
   })
-    .then(() => res.sendStatus(204))
+    .then(() => res.sendStatus(202))
     .catch(next);
 };
 
