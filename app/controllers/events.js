@@ -2,9 +2,9 @@ const bodybuilder = require('bodybuilder');
 const { get, isEmpty } = require('lodash');
 const uuid = require('uuid');
 
-const client = require('../services/elasticsearch');
+const elasticSearchClient = require('../services/elasticSearch');
 
-const searchEvents = (req, res, next) => client.search({
+const searchEvents = (req, res, next) => elasticSearchClient.search({
   index: 'event',
   type: 'event',
   body: bodybuilder()
@@ -27,7 +27,7 @@ const createEvent = (req, res, next) => {
 
   const { name, description, date } = req.body;
 
-  return client.create({
+  return elasticSearchClient.create({
     id: uuid(),
     index: 'event',
     type: 'event',
@@ -49,7 +49,7 @@ const deleteEvent = (req, res, next) => {
     return res.sendStatus(400);
   }
 
-  return client.delete({
+  return elasticSearchClient.delete({
     index: 'event',
     type: 'event',
     id
