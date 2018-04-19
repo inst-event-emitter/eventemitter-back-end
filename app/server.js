@@ -2,6 +2,7 @@ const app = require('express')();
 const nconf = require('nconf');
 const globSync = require('glob').sync;
 const morgan = require('morgan');
+
 const logger = require('./utils/logger')('server');
 const { errorHandler, notFound } = require('./middleware/error_handler');
 

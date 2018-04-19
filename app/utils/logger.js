@@ -27,7 +27,7 @@ logConfig.streams.push({
 
 const parent = bunyan.createLogger(logConfig);
 const loggerCollector = [parent];
-process.on('SIGUSR2', () => {
+process.once('SIGUSR2', () => {
   loggerCollector.forEach(logger => logger.reopenFileStreams());
 });
 
