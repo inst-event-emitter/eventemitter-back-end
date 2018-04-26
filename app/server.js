@@ -1,4 +1,5 @@
 const app = require('express')();
+const cors = require('cors');
 const nconf = require('nconf');
 const globSync = require('glob').sync;
 const morgan = require('morgan');
@@ -7,6 +8,8 @@ const logger = require('./utils/logger')('server');
 const { errorHandler, notFound } = require('./middleware/error_handler');
 
 const initApp = () => {
+  app.use(cors());
+
   const env = process.env.NODE_ENV || 'dev';
   if (env === 'dev') {
     app.use(morgan(env));
