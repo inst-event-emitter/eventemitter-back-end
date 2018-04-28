@@ -15,11 +15,13 @@ const searchEvents = (req, res, next) => elasticSearchClient.search({
     .withPagination()
     .build(),
 })
-  .then(result => get(result, 'hits.hits', []).map(hit => ({
-    id: get(hit, '_id'),
-    ...get(hit, '_source', {})
-  })))
-  .then(events => res.json(events))
+  .then(result => res.json({
+    events: get(result, 'hits.hits', []).map(hit => ({
+      id: get(hit, '_id'),
+      ...get(hit, '_source', {})
+    })),
+    total: get(result, 'hits.total')
+  }))
   .catch(next);
 
 const createEvent = (req, res, next) => {
