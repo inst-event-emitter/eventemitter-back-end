@@ -1,6 +1,7 @@
 {
   "elasticSearch": {
-    "host": "http://172.29.10.21:9200",
-    "log": "info"
+    "host": "http://localhost:9200",
+    "log": "info",
+    "index": "event-emitter-test"
   }
 }

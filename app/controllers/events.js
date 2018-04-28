@@ -1,3 +1,4 @@
+const nconf = require('nconf');
 const { get, isEmpty } = require('lodash');
 const uuid = require('uuid');
 
@@ -6,7 +7,7 @@ const elasticSearchClient = require('../services/elasticSearch');
 const EventsQueryBuilder = require('../utils/events_query_builder');
 
 const searchEvents = (req, res, next) => elasticSearchClient.search({
-  index: 'event',
+  index: nconf.get('elasticSearch:index'),
   type: 'event',
   body: EventsQueryBuilder
     .create(req.query)
@@ -34,7 +35,7 @@ const createEvent = (req, res, next) => {
 
   return elasticSearchClient.create({
     id: uuid(),
-    index: 'event',
+    index: nconf.get('elasticSearch:index'),
     type: 'event',
     body: {
       name,
@@ -55,7 +56,7 @@ const deleteEvent = (req, res, next) => {
   }
 
   return elasticSearchClient.delete({
-    index: 'event',
+    index: nconf.get('elasticSearch:index'),
     type: 'event',
     id
   })

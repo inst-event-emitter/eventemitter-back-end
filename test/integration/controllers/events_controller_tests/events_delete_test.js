@@ -32,7 +32,7 @@ describe('DELETE /api/v1/events/:id resource', () => {
       global.elasticSearchClient.delete.restore();
     });
 
-    it('should return status code 400', async () => {
+    it('should return status code 404', async () => {
       expect(response.status).to.be.equal(404);
     });
   });
