@@ -9,8 +9,9 @@
   "scripts": {
     "start": "nodemon app",
     "lint": "eslint .",
-    "travis-build-script": "yarn lint",
-    "test": "mocha"
+    "test": "NODE_ENV=test mocha",
+    "test:unit": "yarn test --recursive test/unit",
+    "travis-build-script": "yarn lint & yarn test:unit"
   },
   "devDependencies": {
     "chai": "^4.1.2",
