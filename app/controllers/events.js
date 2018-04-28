@@ -1,16 +1,19 @@
-const bodybuilder = require('bodybuilder');
 const { get, isEmpty } = require('lodash');
 const uuid = require('uuid');
 
 const elasticSearchClient = require('../services/elasticSearch');
 
+const EventsQueryBuilder = require('../utils/events_query_builder');
+
 const searchEvents = (req, res, next) => elasticSearchClient.search({
   index: 'event',
   type: 'event',
-  body: bodybuilder()
-    .query('match_all')
-    // .query('match', 'name', 'my event')
-    .build()
+  body: EventsQueryBuilder
+    .create(req.query)
+    .withName()
+    .withDescription()
+    .withPagination()
+    .build(),
 })
   .then(result => get(result, 'hits.hits', []).map(hit => ({
     id: get(hit, '_id'),
