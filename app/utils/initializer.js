@@ -1,7 +1,7 @@
 require('../config');
 
 const logger = require('../utils/logger')('initializer');
-const elasticSearchClient = require('../services/elasticSearch');
+const { elasticSearchClient } = require('../services/elasticSearch');
 
 const elasticSearchInitialization = () => new Promise((resolve, reject) => {
   elasticSearchClient.ping({
@@ -21,7 +21,7 @@ module.exports.appReady = () => Promise.all([
   elasticSearchInitialization(),
 ])
   .then(() => {
-    logger.info('Successfully initialize all services');
+    logger.info('All services initialized successfully');
   })
   .catch((err) => {
     logger.error(`Initialization error: ${err}`);

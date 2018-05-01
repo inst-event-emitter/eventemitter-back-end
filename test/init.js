@@ -1,9 +1,9 @@
 const chai = require('chai');
 const supertest = require('supertest');
-require('../app/config');
+require('../app/utils/initializer');
 
 const { initApp, app } = require('../app/server');
-const elasticSearchClient = require('../app/services/elasticSearch');
+const { elasticSearchClient } = require('../app/services/elasticSearch');
 
 initApp();
 chai.should();

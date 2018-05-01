@@ -1,44 +1,37 @@
-const sinon = require('sinon');
-const { isEmpty, head } = require('lodash');
+const { head } = require('lodash');
+
+const { getTypeAndIndex } = require('../../../../app/services/elasticSearch');
+const { createDocuments, removeDocuments } = require('../../helpers/elasticsearch_helper');
+const EventFactory = require('../../helpers/factories/event');
 
 describe('GET /api/v1/events resource', () => {
   context('when call without query params', () => {
     let response;
+    const eventCount = 5;
+    const { index, type } = getTypeAndIndex('event');
+    const events = EventFactory.buildList(eventCount);
 
     before(async () => {
-      sinon.stub(global.elasticSearchClient, 'search').callsFake(() => Promise.resolve({
-        hits: {
-          hits: [{
-            _id: '123',
-            _source: {
-              name: 'some event name',
-              description: 'some event description',
-              date: '2018-04-05 12:30'
-            }
-          }],
-          total: 1
-        }
-      }));
+      await createDocuments(events, index, type);
 
       response = await global.app.get('/api/v1/events');
     });
 
-    after(() => {
-      global.elasticSearchClient.search.restore();
+    after(async () => {
+      await removeDocuments(events, index, type);
     });
 
     it('should return status code 200', async () => {
       expect(response.status).to.be.equal(200);
     });
 
-    it('should respond events', async () => {
+    it(`should respond ${eventCount} events`, async () => {
       expect(response.body).to.have.property('events').that.is.an('array');
+      expect(response.body.events).to.have.lengthOf(eventCount);
       expect(response.body).to.have.property('total').that.is.a('number');
 
-      if (!isEmpty(response.body.events)) {
-        const eventKeys = ['id', 'name', 'date'];
-        expect(head(response.body.events)).to.include.all.keys(eventKeys);
-      }
+      const eventKeys = ['id', 'name', 'description', 'date'];
+      expect(head(response.body.events)).to.include.all.keys(eventKeys);
     });
   });
 });

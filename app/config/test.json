@@ -1,7 +1,10 @@
 {
   "elasticSearch": {
     "host": "http://localhost:9200",
+    "index": "event-emitter-test",
     "log": "info",
-    "index": "event-emitter-test"
+    "event": {
+      "type": "event"
+    }
   }
 }
