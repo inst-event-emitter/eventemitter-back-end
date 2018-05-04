@@ -9,7 +9,7 @@ describe('POST /api/v1/events resource', () => {
 
       response = await global.app.post('/api/v1/events').send({
         name: 'test name',
-        description: 'test description',
+        description: 'test event description which has length equal 50 or more',
         date: '2018-04-05 13:00'
       });
     });
