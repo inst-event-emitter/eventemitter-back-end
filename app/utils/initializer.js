@@ -10,10 +10,9 @@ const elasticSearchInitialization = () => new Promise((resolve, reject) => {
     if (err) {
       logger.error(`elasticsearch connection error: ${err}`);
       reject(err);
-    } else {
-      logger.info('Successfully connected to elasticsearch cluster');
-      resolve();
     }
+    logger.info('Successfully connected to elasticsearch cluster');
+    resolve();
   });
 });
 

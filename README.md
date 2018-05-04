@@ -9,7 +9,7 @@ Before test please run:
 `docker-compose -f docker-compose.test.yml up`
 
 This command creates elastic search container.
-You ay connect to Elasticsearch through 127.0.0.1:9200 or 127.0.0.1:9300.
+You may connect to Elasticsearch through 127.0.0.1:9200 or 127.0.0.1:9300.
 
 To ensure that container is running:
 
