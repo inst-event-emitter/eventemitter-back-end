@@ -22,7 +22,7 @@ const prepareValidationError = err => ({
   errors: get(err, 'errors', []).map(error => ({
     location: get(error, 'location'),
     field: get(error, 'field[0]'),
-    message: get(error, 'messages[0]'),
+    messages: get(error, 'messages'),
   })),
 });
 
