@@ -12,6 +12,7 @@ const searchEvents = (req, res, next) => elasticSearchClient.search({
     .create(req.query)
     .withName()
     .withDescription()
+    .withDateRange()
     .withPagination()
     .build(),
 })
