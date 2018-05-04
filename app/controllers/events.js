@@ -1,4 +1,4 @@
-const { get, isEmpty } = require('lodash');
+const { get } = require('lodash');
 const uuid = require('uuid');
 
 const { elasticSearchClient, getTypeAndIndex } = require('../services/elasticSearch');
@@ -15,6 +15,7 @@ const searchEvents = (req, res, next) => {
       .create(req.query)
       .withName()
       .withDescription()
+      .withDateRange()
       .withPagination()
       .build(),
   })
@@ -29,11 +30,6 @@ const searchEvents = (req, res, next) => {
 };
 
 const createEvent = (req, res, next) => {
-  // TODO: create validation for route params
-  if (isEmpty(req.body)) {
-    return res.sendStatus(400);
-  }
-
   const { name, description, date } = req.body;
   const { index, type } = getTypeAndIndex('event');
 
@@ -52,12 +48,7 @@ const createEvent = (req, res, next) => {
 };
 
 const deleteEvent = (req, res, next) => {
-  // TODO: create validation for route params
   const { id } = req.params;
-
-  if (isEmpty(id)) {
-    return res.sendStatus(400);
-  }
 
   const { index, type } = getTypeAndIndex('event');
 
