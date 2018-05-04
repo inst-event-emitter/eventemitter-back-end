@@ -47,5 +47,6 @@ const startApp = () => {
 
 module.exports = {
   initApp,
-  startApp
+  startApp,
+  app,
 };

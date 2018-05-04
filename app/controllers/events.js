@@ -1,35 +1,42 @@
 const { get } = require('lodash');
 const uuid = require('uuid');
 
-const elasticSearchClient = require('../services/elasticSearch');
+const { elasticSearchClient, getTypeAndIndex } = require('../services/elasticSearch');
 
 const EventsQueryBuilder = require('../utils/events_query_builder');
 
-const searchEvents = (req, res, next) => elasticSearchClient.search({
-  index: 'event',
-  type: 'event',
-  body: EventsQueryBuilder
-    .create(req.query)
-    .withName()
-    .withDescription()
-    .withDateRange()
-    .withPagination()
-    .build(),
-})
-  .then(result => get(result, 'hits.hits', []).map(hit => ({
-    id: get(hit, '_id'),
-    ...get(hit, '_source', {})
-  })))
-  .then(events => res.json(events))
-  .catch(next);
+const searchEvents = (req, res, next) => {
+  const { index, type } = getTypeAndIndex('event');
+
+  return elasticSearchClient.search({
+    index,
+    type,
+    body: EventsQueryBuilder
+      .create(req.query)
+      .withName()
+      .withDescription()
+      .withDateRange()
+      .withPagination()
+      .build(),
+  })
+    .then(result => res.json({
+      events: get(result, 'hits.hits', []).map(hit => ({
+        id: get(hit, '_id'),
+        ...get(hit, '_source', {})
+      })),
+      total: get(result, 'hits.total')
+    }))
+    .catch(next);
+};
 
 const createEvent = (req, res, next) => {
   const { name, description, date } = req.body;
+  const { index, type } = getTypeAndIndex('event');
 
   return elasticSearchClient.create({
     id: uuid(),
-    index: 'event',
-    type: 'event',
+    index,
+    type,
     body: {
       name,
       description,
@@ -43,11 +50,9 @@ const createEvent = (req, res, next) => {
 const deleteEvent = (req, res, next) => {
   const { id } = req.params;
 
-  return elasticSearchClient.delete({
-    index: 'event',
-    type: 'event',
-    id
-  })
+  const { index, type } = getTypeAndIndex('event');
+
+  return elasticSearchClient.delete({ index, type, id })
     .then(() => res.sendStatus(202))
     .catch(next);
 };

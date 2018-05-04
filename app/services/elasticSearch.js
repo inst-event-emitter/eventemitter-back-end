@@ -1,21 +1,26 @@
 const elasticSearch = require('elasticsearch');
 const elasticConfig = require('nconf').get('elasticSearch');
+const { get, isNil } = require('lodash');
 
-const logger = require('../utils/logger')('elasticSearch');
+const getTypeAndIndex = (type) => {
+  const typeConfig = elasticConfig[type];
+
+  if (isNil(typeConfig)) {
+    throw new Error(`Configuration for '${type}' type is missed`);
+  }
+
+  return {
+    index: get(typeConfig, 'index', elasticConfig.index),
+    type: typeConfig.type
+  };
+};
 
 const elasticSearchClient = new elasticSearch.Client({
   host: elasticConfig.host,
   log: elasticConfig.log
 });
 
-elasticSearchClient.ping({
-  requestTimeout: 1000
-}, (err) => {
-  if (err) {
-    logger.error(`elasticsearch connection error: ${err}`);
-  } else {
-    logger.info('Successfully connected to elasticSearch cluster');
-  }
-});
-
-module.exports = elasticSearchClient;
+module.exports = {
+  getTypeAndIndex,
+  elasticSearchClient
+};

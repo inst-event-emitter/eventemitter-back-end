@@ -2,6 +2,7 @@ version: '3'
 services:
   elasticsearch-hq:
     image: elastichq/elasticsearch-hq
+    container_name: elasticsearch-hq
     ports:
       - "5000:5000"
     environment:

@@ -1,0 +1,10 @@
+{
+  "elasticSearch": {
+    "host": "http://localhost:9200",
+    "index": "event-emitter-test",
+    "log": "info",
+    "event": {
+      "type": "event"
+    }
+  }
+}
