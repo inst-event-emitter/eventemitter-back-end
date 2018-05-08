@@ -42,7 +42,7 @@ module.exports = class EventQueryBuilder {
   withDateRange() {
     const { fromDate = null, toDate = null } = this.query;
 
-    this.body.query('range', 'date', { gte: fromDate, lte: toDate, format: 'yyyy-MM-dd' });
+    this.body.query('range', 'date', { gte: fromDate, lte: toDate, format: 'epoch_second' });
 
     return this;
   }
