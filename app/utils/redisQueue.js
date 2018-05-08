@@ -26,11 +26,11 @@ const buildQueue = (name, params) => new Promise((resolve, reject) => {
   }
 });
 
-const createWorkerQueue = (queueName, host = '127.0.0.1', port = 6379) => {
+const createWorkerQueue = (queueName) => {
   const workerParams = {
     redis: {
-      host,
-      port,
+      host: nconf.get('redis:host'),
+      port: nconf.get('redis:port'),
       db: 0,
       options: {}
     },
@@ -45,11 +45,11 @@ const createWorkerQueue = (queueName, host = '127.0.0.1', port = 6379) => {
   return buildQueue(queueName, workerParams);
 };
 
-const createExportQueue = (queueName, host = '127.0.0.1', port = 6379) => {
+const createExportQueue = (queueName) => {
   const workerParams = {
     redis: {
-      host,
-      port,
+      host: nconf.get('redis:host'),
+      port: nconf.get('redis:port'),
       db: 0,
       options: {}
     },

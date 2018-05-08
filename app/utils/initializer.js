@@ -2,7 +2,7 @@ require('../config');
 
 const logger = require('../utils/logger')('initializer');
 const { elasticSearchClient } = require('../services/elasticSearch');
-const { initExportEventsQueue } = require('../services/exportEventsService');
+const { initEventsQueue } = require('../services/exportEventsService');
 
 const elasticSearchInitialization = () => new Promise((resolve, reject) => {
   elasticSearchClient.ping({
@@ -17,8 +17,8 @@ const elasticSearchInitialization = () => new Promise((resolve, reject) => {
   });
 });
 
-const initEventsExportService = () => new Promise((resolve, reject) => {
-  initExportEventsQueue()
+const initEventsQueueService = () => new Promise((resolve, reject) => {
+  initEventsQueue()
     .then(() => {
       logger.info('Successfully initialize events export service');
       resolve();
@@ -31,7 +31,7 @@ const initEventsExportService = () => new Promise((resolve, reject) => {
 
 module.exports.appReady = () => Promise.all([
   elasticSearchInitialization(),
-  initEventsExportService(),
+  initEventsQueueService(),
 ])
   .then(() => {
     logger.info('All services initialized successfully');

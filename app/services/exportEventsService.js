@@ -3,7 +3,7 @@ const { createExportQueue } = require('../utils/redisQueue');
 
 let eventsQueue;
 
-const initExportEventsQueue = () => createExportQueue('eventsQueue')
+const initEventsQueue = () => createExportQueue('eventsQueue')
   .then((queue) => {
     eventsQueue = queue;
     logger.info('Successfully connected to Redis');
@@ -14,5 +14,5 @@ const initExportEventsQueue = () => createExportQueue('eventsQueue')
   });
 
 module.exports = {
-  initExportEventsQueue,
+  initEventsQueue,
 };
