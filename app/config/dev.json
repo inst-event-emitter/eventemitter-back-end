@@ -14,5 +14,8 @@
       "type": "event",
       "index": "event"
     }
+  },
+  "redis": {
+    "checkStalledJobsInterval": 3600000
   }
 }

@@ -2,6 +2,16 @@
 
 # Event Emitter backend
 
+## Development
+
+Before start run:
+
+`docker-compose -f docker-compose.dev.yml up`
+
+Docker start locally tool to see all info about elasticsearch cluster and start redis container for queues.
+
+And after `yarn(or npm) start:dev`
+
 ## Testing
 
 Before test please run:
