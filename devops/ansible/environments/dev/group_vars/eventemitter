@@ -1,0 +1,27 @@
+---
+
+eventemitter_server:
+  env: development
+
+nginx:
+  currenta:
+    server:
+      listen: 80
+
+      location /:
+        root: /var/www/eventemitter/public
+        try_files: $uri $uri/ /index.html =404
+
+      location = /favicon.ico:
+        log_not_found: 'off'
+        access_log: 'off'
+
+      location /api:
+        proxy_pass: http://127.0.0.1:3000/api
+
+      error_log: /var/log/nginx/eventemitter_error.log
+      access_log: /var/log/nginx/eventemitter_access.log
+
+mongodb_version: "3.6"
+
+nodejs_version: 8.11.1

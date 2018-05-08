@@ -1,0 +1,72 @@
+---
+
+- name: ensure project group exists
+  group:
+    name: "{{ eventemitter_backend.user.group }}"
+
+- name: ensure project user exists
+  user:
+    name: "{{ eventemitter_backend.user.name }}"
+    group: "{{ eventemitter_backend.user.group }}"
+
+- name: ensure work directory exists
+  file:
+    dest: "{{ eventemitter_backend.work_dir }}"
+    state: directory
+    recurse: true
+
+- name: deliver server code
+  synchronize:
+    src: "{{ eventemitter_backend.src }}/"
+    dest: "{{ eventemitter_backend.work_dir }}"
+    delete: true
+    recursive: true
+
+- name: check permissions
+  file:
+    path: "{{ eventemitter_backend.work_dir }}"
+    owner: "{{ eventemitter_backend.user.name }}"
+    group: "{{ eventemitter_backend.user.group }}"
+    recurse: true
+
+- name: ensure pm2 is installed
+  npm:
+    name: pm2
+    global: true
+    production: true
+
+- name: get home dir for project user
+  getent:
+    database: passwd
+    key: "{{ eventemitter_backend.user.name }}"
+    split: ":"
+
+- name: stop server
+  command: pm2 kill
+  args:
+    chdir: "{{ eventemitter_backend.work_dir }}"
+  ignore_errors: true
+  become_user: "{{ eventemitter_backend.user.name }}"
+
+- name: start server
+  command: pm2 start yarn --name event-emitter-api -- start
+  environment:
+    NODE_ENV: "{{ eventemitter_backend.env }}"
+  args:
+    chdir: "{{ eventemitter_backend.work_dir }}"
+  become_user: "{{ eventemitter_backend.user.name }}"
+
+- name: generate startup script
+  shell: pm2 startup systemd -u {{ eventemitter_backend.user.name }} --hp {{ getent_passwd[eventemitter_backend.user.name][4] }} --service-name eventemitter
+  environment:
+    NODE_ENV: "{{ eventemitter_backend.env }}"
+  args:
+    chdir: "{{ eventemitter_backend.work_dir }}"
+
+- name: save server
+  shell: pm2 save
+  environment:
+    NODE_ENV: "{{ eventemitter_backend.env }}"
+  args:
+    chdir: "{{ eventemitter_backend.work_dir }}"
+  become_user: "{{ eventemitter_backend.user.name }}"

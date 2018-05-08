@@ -1,0 +1,15 @@
+---
+
+- name: ensure node repository rpm key is installed
+  rpm_key:
+    key: https://rpm.nodesource.com/pub/el/NODESOURCE-GPG-SIGNING-KEY-EL
+
+- name: remove old node repository
+  yum:
+    name: nodesource-release
+    state: absent
+  when: nodejs.reinstall
+
+- name: ensure node repositories are installed
+  yum:
+    name: "{{ nodejs.repo.url }}"

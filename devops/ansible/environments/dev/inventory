@@ -1,0 +1,5 @@
+[all:vars]
+ansible_ssh_user=deploy
+
+[eventemitter]
+172.29.10.21

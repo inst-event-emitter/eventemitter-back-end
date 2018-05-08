@@ -1,0 +1,14 @@
+---
+
+- name: ensure apt-transport-https is installed
+  apt:
+    name: apt-transport-https
+
+- name: add Nodesource apt key
+  apt_key:
+    url: https://keyserver.ubuntu.com/pks/lookup?op=get&fingerprint=on&search=0x1655A0AB68576280
+    id: "68576280"
+
+- name: ensure node repositories are installed
+  apt_repository:
+    repo: "{{ nodejs.repo.url }}"

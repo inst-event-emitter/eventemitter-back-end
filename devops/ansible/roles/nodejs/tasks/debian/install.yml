@@ -1,0 +1,6 @@
+---
+
+- name: ensure Node.js and npm are installed
+  apt:
+    name: "nodejs={{ nodejs_version|regex_replace('x', '') }}*"
+    update_cache: true

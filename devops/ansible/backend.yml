@@ -1,0 +1,6 @@
+---
+
+- hosts: eventemitter
+  roles:
+#    - role: nodejs
+    - role: eventemitter/backend

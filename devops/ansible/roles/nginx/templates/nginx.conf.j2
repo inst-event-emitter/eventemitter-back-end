@@ -1,0 +1,41 @@
+#jinja2: lstrip_blocks: True
+# Nginx web-server main configuration file.
+#
+# {{ ansible_managed }}
+#
+
+{% set main = nginx.root.main %}
+{% for cfg in main.keys() | sort(reverse=True, case_sensitive=False) %}
+{% set vlu = main[cfg] %}
+{{ cfg }} {{vlu}};
+{% endfor %}
+
+{% macro print_opts(options, indent='   ', count=0) %}
+{% for key in options.keys() | sort(reverse=True, case_sensitive=False) %}
+  {% set value = options[key] %}
+  {% if value is string or value is number or value in [true, false] %}
+    {{- indent*count }}{{ key }} {{ value }};
+  {% elif value is mapping %}
+    {{- indent*count }}{{ key }} {
+    {# Render options -#}
+    {{ print_opts(value, indent, count+1) -}}
+    {{- indent*count }}}
+  {% elif value is sequence %}
+    {% for i in value | sort -%}
+      {{ print_opts({key: i}, indent, count) -}}
+    {%- endfor %}
+  {% else %}
+    {{- indent*count }}{{ key }} {{ value }};
+  {% endif %}
+{% endfor %}
+{% endmacro %}
+
+{% set configs = nginx.root.options %}
+{% for name in configs.keys() %}
+  {% set opts = configs[name] -%}
+    {{ name }} {
+    {# Render opts -#}
+      {{ print_opts(opts, '  ', count=1) -}}
+    }
+
+{% endfor %}

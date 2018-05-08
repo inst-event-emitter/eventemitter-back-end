@@ -1,0 +1,5 @@
+---
+
+- hosts: eventemitter
+  roles:
+    - role: eventemitter/frontend

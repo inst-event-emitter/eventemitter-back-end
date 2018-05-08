@@ -1,0 +1,28 @@
+---
+
+- name: ensure project group exists
+  group:
+    name: "{{ eventemitter_frontend.user.group }}"
+
+- name: ensure project user exists
+  user:
+    name: "{{ eventemitter_frontend.user.name }}"
+    group: "{{ eventemitter_frontend.user.group }}"
+
+- name: check if work directory exists
+  stat:
+    path: "{{ eventemitter_frontend.work_dir }}"
+  register: work_dir
+
+- name: deliver UI code
+  synchronize:
+    src: "{{ eventemitter_frontend.src }}/"
+    dest: "{{ eventemitter_frontend.work_dir }}"
+    delete: true
+    recursive: true
+
+- name: check permissions
+  file:
+    path: "{{ eventemitter_frontend.work_dir }}"
+    owner: "{{ eventemitter_frontend.user.name }}"
+    group: "{{ eventemitter_frontend.user.group }}"
