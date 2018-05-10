@@ -1,7 +1,7 @@
 require('../config');
 
 const logger = require('../utils/logger')('eventsWorker');
-const { createWorkerQueue } = require('../utils/redisQueue');
+const { createQueue } = require('../utils/redisQueue');
 
 process.on('uncaughtException', (err) => {
   logger.error({ err }, 'uncaughtException');
@@ -10,7 +10,10 @@ process.on('uncaughtException', (err) => {
 });
 
 
-createWorkerQueue('eventsWorker')
+createQueue('eventsWorker', {
+  isWorker: true,
+  removeOnSuccess: true,
+})
   .then(eventsWorker => eventsWorker.process((job, done) => {
     // TODO: Make something with job
     logger.info(`Handle job: ${job.id}`);

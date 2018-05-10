@@ -15,9 +15,21 @@
       "index": "event"
     }
   },
-  "redis": {
-    "host": "127.0.0.1",
-    "port": "6379",
+  "eventsQueue": {
+    "defaultParams": {
+      "redis": {
+        "host": "127.0.0.1",
+        "port": "6379",
+        "db": 0,
+        "options": {}
+      },
+      "isWorker": false,
+      "removeOnSuccess": false,
+      "getEvents": true,
+      "sendEvents": true,
+      "catchExceptions": false,
+      "storeJobs": false
+    },
     "checkStalledJobsInterval": 3600000
   }
 }

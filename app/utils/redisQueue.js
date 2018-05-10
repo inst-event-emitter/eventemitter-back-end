@@ -1,16 +1,18 @@
 const Queue = require('bee-queue');
 const nconf = require('nconf');
+const { defaultsDeep } = require('lodash');
 
 const queues = {};
 
-const buildQueue = (name, params) => new Promise((resolve, reject) => {
-  const { redis: { host, port } } = params;
+const createQueue = (name, params) => new Promise((resolve, reject) => {
+  const queueParams = defaultsDeep(params, nconf.get('eventsQueue:defaultParams'));
+  const { redis: { host, port } } = queueParams;
   const key = host + port + name;
 
   if (!queues[key]) {
-    const queue = new Queue(name, params);
+    const queue = new Queue(name, queueParams);
 
-    queue.checkStalledJobs(nconf.get('redis:checkStalledJobsInterval'));
+    queue.checkStalledJobs(nconf.get('eventsQueue:checkStalledJobsInterval'));
 
     const queueInitTimeout = setTimeout(() => {
       reject(new Error(`Redis client initialization timeout: ${key}`));
@@ -26,46 +28,6 @@ const buildQueue = (name, params) => new Promise((resolve, reject) => {
   }
 });
 
-const createWorkerQueue = (queueName) => {
-  const workerParams = {
-    redis: {
-      host: nconf.get('redis:host'),
-      port: nconf.get('redis:port'),
-      db: 0,
-      options: {}
-    },
-    getEvents: true,
-    isWorker: true,
-    sendEvents: true,
-    removeOnSuccess: true,
-    catchExceptions: false,
-    storeJobs: false
-  };
-
-  return buildQueue(queueName, workerParams);
-};
-
-const createExportQueue = (queueName) => {
-  const workerParams = {
-    redis: {
-      host: nconf.get('redis:host'),
-      port: nconf.get('redis:port'),
-      db: 0,
-      options: {}
-    },
-    getEvents: true,
-    sendEvents: true,
-    isWorker: false,
-    removeOnSuccess: false,
-    catchExceptions: false,
-    storeJobs: false
-  };
-
-  return buildQueue(queueName, workerParams);
-};
-
 module.exports = {
-  buildQueue,
-  createWorkerQueue,
-  createExportQueue,
+  createQueue,
 };

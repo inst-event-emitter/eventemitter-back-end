@@ -2,7 +2,7 @@ require('../config');
 
 const logger = require('../utils/logger')('initializer');
 const { elasticSearchClient } = require('../services/elasticSearch');
-const { initEventsQueue } = require('../services/exportEventsService');
+const { initEventsQueue } = require('../services/eventsService');
 
 const elasticSearchInitialization = () => new Promise((resolve, reject) => {
   elasticSearchClient.ping({

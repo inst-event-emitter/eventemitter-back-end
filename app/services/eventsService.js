@@ -1,9 +1,9 @@
-const logger = require('../utils/logger')('exportEvevntsService');
-const { createExportQueue } = require('../utils/redisQueue');
+const logger = require('../utils/logger')('eventsService');
+const { createQueue } = require('../utils/redisQueue');
 
 let eventsQueue;
 
-const initEventsQueue = () => createExportQueue('eventsQueue')
+const initEventsQueue = () => createQueue('eventsQueue')
   .then((queue) => {
     eventsQueue = queue;
     logger.info('Successfully connected to Redis');
