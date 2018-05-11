@@ -6,7 +6,7 @@ const { initEventsQueue } = require('../services/eventsService');
 
 const elasticSearchInitialization = () => new Promise((resolve, reject) => {
   elasticSearchClient.ping({
-    requestTimeout: 1000
+    requestTimeout: 5000
   }, (err) => {
     if (err) {
       logger.error('Elasticsearch connection error', err);

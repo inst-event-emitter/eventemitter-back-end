@@ -33,6 +33,6 @@ When container is up for the first time, you should create index in the elastics
   -d @elasticsearch/template.json \
   http://localhost:9200/event-emitter-test
 ```
-    
+
  Then you can run all tests locally by executing `npm test` or `yarn test` command.
  
