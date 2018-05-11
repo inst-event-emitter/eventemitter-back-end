@@ -1,5 +1,8 @@
 [![Build Status](https://travis-ci.org/inst-event-emitter/eventemitter-backend.svg?branch=master)](https://travis-ci.org/inst-event-emitter/eventemitter-backend)
 [![Code Climate](https://codeclimate.com/github/inst-event-emitter/eventemitter-backend/badges/gpa.svg)](https://codeclimate.com/github/inst-event-emitter/eventemitter-backend)
+[![codecov](https://codecov.io/gh/inst-event-emitter/eventemitter-backend/branch/dev/graph/badge.svg)](https://codecov.io/gh/inst-event-emitter/eventemitter-backend)
+
+
 
 # Event Emitter backend
 

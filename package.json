@@ -10,12 +10,13 @@
     "start": "node app",
     "start:dev": "nodemon app",
     "lint": "eslint .",
-    "test": "NODE_ENV=test mocha",
+    "test": "cross-env NODE_ENV=test mocha",
     "test:unit": "yarn test --recursive test/unit"
   },
   "devDependencies": {
     "chai": "^4.1.2",
     "codecov": "^3.0.2",
+    "cross-env": "^5.1.5",
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.9.0",

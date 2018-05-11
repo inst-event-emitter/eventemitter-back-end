@@ -45,13 +45,20 @@ const createEvent = (req, res, next) => {
       date,
     }
   })
-    .then(() => createTemplate(EVENT_CREATED.template))
-    .then(template => sendEmail({
-      // TODO: use real event owner email
-      to: 'krivichaninds@gmail.com',
-      subject: EVENT_CREATED.subject,
-      html: template,
-    }))
+    .then(() => {
+      // TODO: Refact this code and make more pretty
+      if (process.env.NODE_ENV !== 'test') {
+        return createTemplate(EVENT_CREATED.template)
+          .then(template => sendEmail({
+            // TODO: use real event owner email
+            to: 'krivichaninds@gmail.com',
+            subject: EVENT_CREATED.subject,
+            html: template,
+          }));
+      }
+
+      return Promise.resolve();
+    })
     .then(() => res.sendStatus(201))
     .catch(next);
 };
