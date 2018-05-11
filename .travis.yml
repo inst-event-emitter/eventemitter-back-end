@@ -11,5 +11,6 @@ install:
 before_script:
   - sleep 5
 script:
-  - yarn travis-build-script  
-
+  - yarn lint
+  - nyc --reporter=lcov yarn test
+  - codecov
