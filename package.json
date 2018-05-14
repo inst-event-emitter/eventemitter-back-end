@@ -26,6 +26,7 @@
     "supertest": "^3.0.0"
   },
   "dependencies": {
+    "bee-queue": "^1.2.2",
     "body-parser": "^1.18.2",
     "bodybuilder": "^2.2.10",
     "bunyan": "^1.8.12",
