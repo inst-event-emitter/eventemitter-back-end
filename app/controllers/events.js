@@ -3,6 +3,7 @@ const uuid = require('uuid');
 
 const { elasticSearchClient, getTypeAndIndex } = require('../services/elasticSearch');
 const { sendEmail } = require('../services/mailer');
+const { EVENT_CREATED } = require('../templates');
 
 const EventsQueryBuilder = require('../utils/events_query_builder');
 
@@ -47,8 +48,8 @@ const createEvent = (req, res, next) => {
     .then(() => sendEmail({
       // TODO: use real event owner email
       to: 'krivichaninds@gmail.com',
-      subject: 'Event Emitter Service - Event Creation',
-      // TODO: Add template
+      subject: EVENT_CREATED.subject,
+      template: EVENT_CREATED.template()
     }))
     .then(() => res.sendStatus(201))
     .catch(next);
