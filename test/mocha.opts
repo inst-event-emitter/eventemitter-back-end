@@ -1,3 +1,4 @@
 --require test/init
 --recursive
---timeout 30000
+--timeout 5000
+--exit

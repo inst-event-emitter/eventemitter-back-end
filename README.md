@@ -1,4 +1,8 @@
 [![Build Status](https://travis-ci.org/inst-event-emitter/eventemitter-backend.svg?branch=master)](https://travis-ci.org/inst-event-emitter/eventemitter-backend)
+[![Code Climate](https://codeclimate.com/github/inst-event-emitter/eventemitter-backend/badges/gpa.svg)](https://codeclimate.com/github/inst-event-emitter/eventemitter-backend)
+[![codecov](https://codecov.io/gh/inst-event-emitter/eventemitter-backend/branch/dev/graph/badge.svg)](https://codecov.io/gh/inst-event-emitter/eventemitter-backend)
+
+
 
 # Event Emitter backend
 
@@ -33,6 +37,6 @@ When container is up for the first time, you should create index in the elastics
   -d @elasticsearch/template.json \
   http://localhost:9200/event-emitter-test
 ```
-    
+
  Then you can run all tests locally by executing `npm test` or `yarn test` command.
  
