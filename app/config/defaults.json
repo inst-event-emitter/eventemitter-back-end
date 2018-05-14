@@ -12,6 +12,7 @@
     "streams": []
   },
   "mailer": {
-    "templatesDir": "app/templates"
+    "templatesDir": "app/templates",
+    "from": "EventEmitterService@gmail.com"
   }
 }

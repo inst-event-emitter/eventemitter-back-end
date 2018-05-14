@@ -15,7 +15,7 @@ const transporter = createTransport({
 });
 
 const defaultEmailOptions = {
-  from: 'EventEmitterService@gmail.com',
+  from: nconf.get('mailer:from'),
 };
 
 const sendEmail = (emailOptions) => {
