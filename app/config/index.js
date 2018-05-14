@@ -1,8 +1,10 @@
 const path = require('path');
 const nconf = require('nconf');
+const dotenv = require('dotenv');
 
 const defaults = require('./defaults.json');
 
+dotenv.config();
 nconf.use('memory');
 
 const env = process.env.NODE_ENV || 'dev';
@@ -16,4 +18,5 @@ nconf
   .file('envConfig', path.join(__dirname, `${env}.json`))
   .defaults(defaults);
 
-module.exports = nconf;
+nconf.set('mailer:user', process.env.EMAIL_USER);
+nconf.set('mailer:pass', process.env.EMAIL_PASS);
