@@ -10,5 +10,9 @@
     "name": "event-emitter",
     "logsDir": "logs",
     "streams": []
+  },
+  "mailer": {
+    "templatesDir": "app/templates",
+    "from": "EventEmitterService@gmail.com"
   }
 }
