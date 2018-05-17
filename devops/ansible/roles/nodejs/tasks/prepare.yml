@@ -1,0 +1,9 @@
+---
+
+- name: prepare rhel host
+  include: redhat/prepare.yml
+  when: (ansible_os_family | lower == "redhat")
+
+- name: prepare debian host
+  include: debian/prepare.yml
+  when: (ansible_os_family | lower == "debian")

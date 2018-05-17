@@ -1,0 +1,25 @@
+---
+
+nginx:
+
+  currenta: {}
+
+  root:
+    main:
+      worker_processes: auto
+      error_log: /var/log/nginx/error.log
+
+    options:
+      events:
+        worker_connections: 1024
+
+      http:
+        access_log: /var/log/nginx/access.log
+        sendfile: "on"
+        tcp_nopush: "on"
+        tcp_nodelay: "on"
+        keepalive_timeout: 65
+        include:
+          - "/etc/nginx/mime.types"
+          - "/etc/nginx/conf.d/*.conf"
+        default_type: "application/octet-stream"

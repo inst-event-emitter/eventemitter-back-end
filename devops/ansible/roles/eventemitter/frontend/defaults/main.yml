@@ -1,0 +1,9 @@
+---
+
+eventemitter_frontend:
+  src: "{{ src | default('frontent') }}"
+  work_dir: /var/www/eventemitter/public
+
+  user:
+    name: eventemitter
+    group: eventemitter

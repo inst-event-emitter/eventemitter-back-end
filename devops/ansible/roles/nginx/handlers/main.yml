@@ -1,0 +1,20 @@
+---
+
+- name: nginx restart
+  debug:
+    msg: "checking nginx config before restart"
+  changed_when: true
+  notify:
+    - nginx configuration test
+    - nginx restart after config test
+
+- name: nginx configuration test
+  command: "nginx -t"
+  register: result
+  changed_when: "result.rc != 0"
+  check_mode: no
+
+- name: nginx restart after config test
+  service:
+    name: nginx
+    state: restarted

@@ -1,0 +1,5 @@
+---
+
+nodejs:
+  repo:
+    url: "https://rpm.nodesource.com/pub_{{ nodejs_version[0] }}.x/el/7/{{ ansible_architecture }}/nodesource-release-el7-1.noarch.rpm"

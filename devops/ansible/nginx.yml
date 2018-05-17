@@ -1,0 +1,5 @@
+---
+
+- hosts: currenta
+  roles:
+    - role: nginx

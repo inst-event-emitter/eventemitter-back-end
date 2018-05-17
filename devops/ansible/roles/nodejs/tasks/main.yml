@@ -1,0 +1,14 @@
+---
+
+- name: include OS-specific variables
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution_release | lower }}.yml"
+    - "{{ ansible_distribution | lower }}.yml"
+    - "{{ ansible_os_family | lower }}.yml"
+
+- import_tasks: prepare.yml
+  tags: prepare
+
+- import_tasks: install.yml
+  tags: install

@@ -1,0 +1,11 @@
+---
+
+eventemitter_backend:
+  src: "{{ src | default('server') }}"
+  work_dir: /var/eventemitter/backend
+
+  user:
+    name: eventemitter
+    group: eventemitter
+
+  env: dev

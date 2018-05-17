@@ -1,0 +1,5 @@
+---
+
+- name: ensure EPEL repo is installed
+  yum:
+    name: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm"

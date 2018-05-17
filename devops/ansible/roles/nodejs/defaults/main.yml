@@ -1,0 +1,6 @@
+---
+
+nodejs_version: 9.11.1
+
+nodejs:
+  reinstall: false

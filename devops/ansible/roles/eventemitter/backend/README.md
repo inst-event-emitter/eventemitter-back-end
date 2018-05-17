@@ -1,0 +1,46 @@
+Eventemitter Server
+=========
+
+This is an Ansible role for Eventemitter backend service deploy
+
+Requirements
+------------
+
+This role has been tested with Ansible 2.5 only. It's also supposed that
+you are using the merge behaviour for variables (please, see about
+[hash_behaviour=merge](http://docs.ansible.com/ansible/latest/reference_appendices/config.html?highlight=hash%20behaviour#envvar-ANSIBLE_HASH_BEHAVIOUR)
+for details)
+
+
+Role Variables
+--------------
+
+This role declares and uses the configurations variables in a hash under the
+_eventemitter_backend_ key. This is a description for main variables:
+
+  * _eventemitter_backend.work_dir_ target dir where the backend application should be delivered
+  * _eventemitter_backend.env_ NODE_ENV variable value (development, staging, production, testing, etc)
+
+
+Dependencies
+------------
+
+This role doesn't depend from other ansible roles
+
+Example Playbook
+----------------
+
+An example of how to use this role:
+
+    - hosts: servers
+      roles:
+        - role: eventemitter_backend
+          eventemitter_backend:
+            work_dir: /var/eventemitter/server
+            env: development
+
+
+License
+-------
+
+BSD

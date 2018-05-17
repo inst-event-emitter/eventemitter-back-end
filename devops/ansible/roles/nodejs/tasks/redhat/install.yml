@@ -1,0 +1,7 @@
+---
+
+- name: install nodejs
+  yum:
+    name: nodejs-{{ nodejs_version }}
+    update_cache: true
+    allow_downgrade: true
