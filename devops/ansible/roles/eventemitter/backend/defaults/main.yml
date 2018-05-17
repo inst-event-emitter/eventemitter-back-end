@@ -8,4 +8,4 @@ eventemitter_backend:
     name: eventemitter
     group: eventemitter
 
-  env: development
+  env: dev
