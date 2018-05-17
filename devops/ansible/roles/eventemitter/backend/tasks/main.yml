@@ -49,7 +49,7 @@
   become_user: "{{ eventemitter_backend.user.name }}"
 
 - name: start server
-  command: pm2 start yarn --name event-emitter-api -- start
+  command: pm2 start npm --name event-emitter-api -- start
   environment:
     NODE_ENV: "{{ eventemitter_backend.env }}"
   args:
